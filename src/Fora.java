@@ -92,9 +92,11 @@ public class Fora {
 
     public ArrayList<Publicacion> filtrarPorPrecio(int precioMaximo) {
         ArrayList<Publicacion> resultado = new ArrayList<>();
-        for (Publicacion p : publicaciones) {
-            if (p.getAlojamiento().tienePrecioMenorOIgualA(precioMaximo)) {
-                resultado.add(p);
+        if (precioMaximo >= 0) {
+            for (Publicacion p : publicaciones) {
+                if (p.getAlojamiento().tienePrecioMenorOIgualA(precioMaximo)) {
+                    resultado.add(p);
+                }
             }
         }
         return resultado;
