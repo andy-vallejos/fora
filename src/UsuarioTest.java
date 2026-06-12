@@ -19,7 +19,7 @@ class UsuarioTest {
     @Test
     public void crearUsuarioSinNombre(){
         assertEquals("email", usuario.getCorreo());
-        assertFalse(usuario.getNombre().isEmpty());
+        assertTrue(usuario.esNombreValido());
     }
 
     @Test
@@ -27,7 +27,6 @@ class UsuarioTest {
         Usuario u = new Usuario("Andy Vallejos", "email", -69442181);
         assertEquals("Andy Vallejos", u.getNombre());
         assertEquals("email", u.getCorreo());
-        assertFalse(u.getTelefono()> 0 );
+        assertTrue(usuario.esTelefonoValido());
     }
-
 }

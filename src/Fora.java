@@ -101,6 +101,17 @@ public class Fora {
         }
         return resultado;
     }
+
+    public ArrayList<Publicacion> filtrarPorWifi() {
+        ArrayList<Publicacion> resultado = new ArrayList<>();
+        for (Publicacion p : publicaciones) {
+            if (p.getAlojamiento().getWifi() == true) {
+                    resultado.add(p);
+            }
+        }
+        return resultado;
+    }
+
     public ArrayList<Publicacion> filtrarPorCategoria(String categoriaBuscada) {
         ArrayList<Publicacion> resultado = new ArrayList<>();
         for (Publicacion p : publicaciones) {
@@ -109,5 +120,17 @@ public class Fora {
             }
         }
         return resultado;
+    }
+
+    public boolean agregarReporteSeguridad(Alojamiento alojamiento, ReporteSeguridad reporte){
+
+        for (Publicacion p : publicaciones) {
+            if (p.getAlojamiento().equals(alojamiento)) {
+                p.agregarReporteSeguridad(reporte);
+                return true;
+            }
+        }
+
+        return false;
     }
 }

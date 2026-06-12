@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 public class ForaTest {
-
     private Usuario juan;
     private Fora sistema;
 
@@ -12,6 +11,25 @@ public class ForaTest {
     public void setUp() {
         juan = new Usuario("Juan", "juan@gmail.com", 123456);
         sistema = new Fora();
+    }
+
+    @Test
+    public void filtrarPorWifi_retornaSoloConWifi(){
+        Alojamiento alojamiento1 = new Alojamiento("Centro", "Cuarto", juan, 400);
+        Alojamiento alojamiento2 = new Alojamiento("Centro", "Departamento", juan, 2000);
+        alojamiento1.agregarWifi();
+        sistema.agregarPublicacion(new Publicacion(alojamiento1));
+        sistema.agregarPublicacion(new Publicacion(new Alojamiento("Centro", "Cuarto", juan, 400)));
+    }
+
+    @Test
+    public void filtrarPorWifi_sinWifi_retornaListaVacia() {
+        Alojamiento alojamiento1 = new Alojamiento("Centro", "Cuarto", juan, 400);
+        Alojamiento alojamiento2 = new Alojamiento("Centro", "Cuarto", juan, 1000);
+        sistema.agregarPublicacion(new Publicacion(alojamiento1));
+        sistema.agregarPublicacion(new Publicacion(alojamiento2));
+        ArrayList<Publicacion> resultado = sistema.filtrarPorPrecio(500);
+        assertEquals(1, resultado.size());
     }
 
     @Test
@@ -63,4 +81,6 @@ public class ForaTest {
         ArrayList<Publicacion> resultado = sistema.filtrarPorCategoria("Mansión");
         assertTrue(resultado.isEmpty());
     }
+
+
 }

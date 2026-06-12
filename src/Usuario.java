@@ -20,11 +20,11 @@ public class Usuario {
     public ArrayList<Alojamiento> getAlojamientos(){return alojamientos; }
     public void agregarAlojamiento(Alojamiento alojamiento){ alojamientos.add(alojamiento); }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Usuario usuario = (Usuario) o;
-        return Objects.equals(correo, usuario.correo);
+    public boolean esNombreValido(){
+        return !nombre.isEmpty();
     }
+    public boolean esTelefonoValido(){
+        return telefono > 0;
+    }
+
 }

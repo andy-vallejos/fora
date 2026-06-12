@@ -109,23 +109,41 @@ public class Main {
     }
 
     public static void agregarReporteSeguridad() {
+
         System.out.println("\n--- AGREGAR REPORTE DE SEGURIDAD ---");
+
         if (sistema.getAlojamientos().isEmpty()) {
             System.out.println("No existen alojamientos para reportar.");
             return;
         }
 
         mostrarAlojamientosConsola();
-        int indiceAlojamiento = leerEntero("Seleccionar Alojamiento: ");
+
+        int indiceAlojamiento =
+                leerEntero("Seleccionar Alojamiento: ");
+
         if (invalidIndex(indiceAlojamiento, sistema.getAlojamientos().size())) return;
 
-        int puntajeSeguridad = leerEntero("Puntaje de seguridad (1-10): ");
-        int iluminacion = leerEntero("Iluminación (1-10): ");
+        Alojamiento alojamiento =
+                sistema.getAlojamientos().get(indiceAlojamiento);
 
-        ReporteSeguridad reporte = new ReporteSeguridad(puntajeSeguridad, iluminacion);
-        System.out.println(sistema.agregarReporteSeguridad(indiceAlojamiento, reporte)
-                ? "Reporte agregado."
-                : "No se pudo agregar el reporte. Verifique si el alojamiento tiene publicación.");
+        int puntajeSeguridad =
+                leerEntero("Puntaje de seguridad (1-10): ");
+
+        int iluminacion =
+                leerEntero("Iluminación (1-10): ");
+
+        ReporteSeguridad reporte =
+                new ReporteSeguridad(puntajeSeguridad, iluminacion);
+
+        boolean resultado =
+                sistema.agregarReporteSeguridad(alojamiento, reporte);
+
+        if (resultado) {
+            System.out.println("Reporte agregado.");
+        } else {
+            System.out.println("No se pudo agregar el reporte.");
+        }
     }
 
     public static void mostrarPublicaciones() {
@@ -245,15 +263,18 @@ public class Main {
         System.out.println("Elija la opcion de filtrado");
         System.out.println("0) Filtrar por precio");
         System.out.println("1) Filtrar por categoria");
+        System.out.println("2) Filtrar por wifi");
         int opcion = leerEntero("opcion: ");
 
 
         if(opcion == 0){
             int precio = leerEntero("Dame un precio maximo: ");
             publicacionesFiltradas = sistema.filtrarPorPrecio(precio);
-        } else {
+        } else if(opcion == 1){
             String categoria = leerLinea("Escribe una categoria: ");
             publicacionesFiltradas = sistema.filtrarPorCategoria(categoria);
+        } else {
+            publicacionesFiltradas = sistema.filtrarPorWifi();
         }
         for (int i = 0; i < publicacionesFiltradas.size(); i++) {
             Publicacion p = publicacionesFiltradas.get(i);

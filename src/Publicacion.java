@@ -18,14 +18,18 @@ public class Publicacion {
     public void agregarReporteSeguridad(ReporteSeguridad reporte) {this.reportes.add(reporte);}
 
     public double calcularIndicePromedio(){
-        if(reportes.isEmpty()){
-            return 10;
+
+        if (reportes.isEmpty()) {
+            return 0.0;
         }
-        double suma=0;
-        for(int i=0;i<reportes.size();i++){
-            suma+=reportes.get(i).calcularIndice();
+
+        double suma = 0;
+
+        for (ReporteSeguridad r : reportes) {
+            suma += r.calcularIndice();
         }
-        return suma/reportes.size();
+
+        return suma / reportes.size();
     }
 
     public boolean estaBloqueada(){
