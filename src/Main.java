@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -19,6 +20,7 @@ public class Main {
                 case 6 -> agregarReporteSeguridad();
                 case 7 -> mostrarPublicaciones();
                 case 8 -> buscarLugaresPorCategoria();
+                case 9 -> mostrarPublicacionesFiltradas();
                 case 0 -> {
                     scanner.close();
                     return;
@@ -32,8 +34,8 @@ public class Main {
         System.out.println("\n------------------------------------");
         System.out.println("1. Registrar usuario            7. Mostrar publicaciones");
         System.out.println("2. Registrar alojamiento        8. Buscar lugar de interes por categoria");
-        System.out.println("3. Registrar lugar de interes   0. Salir.");
-        System.out.println("4. Crear publicación");
+        System.out.println("3. Registrar lugar de interes   9. Mostrar publicaciones con filtros");
+        System.out.println("4. Crear publicación            0. Salir");
         System.out.println("5. Agregar reseña");
         System.out.println("6. Agregar reporte de Seguridad");
         System.out.println("------------------------------------");
@@ -236,5 +238,55 @@ public class Main {
             return true;
         }
         return false;
+    }
+
+    private static void mostrarPublicacionesFiltradas(){
+        ArrayList<Publicacion> publicacionesFiltradas;
+        System.out.println("Elija la opcion de filtrado");
+        System.out.println("0) Filtrar por precio");
+        System.out.println("1) Filtrar por categoria");
+        int opcion = leerEntero("opcion: ");
+
+
+        if(opcion == 0){
+            int precio = leerEntero("Dame un precio maximo: ");
+            publicacionesFiltradas = sistema.filtrarPorPrecio(precio);
+        } else {
+            String categoria = leerLinea("Escribe una categoria: ");
+            publicacionesFiltradas = sistema.filtrarPorCategoria(categoria);
+        }
+        for (int i = 0; i < publicacionesFiltradas.size(); i++) {
+            Publicacion p = publicacionesFiltradas.get(i);
+            Alojamiento al = p.getAlojamiento();
+            Usuario prop = al.getUsuario();
+
+            System.out.printf("[%d] ================================\n", i);
+            System.out.printf("PROPIETARIO: %s (%s) Tel: %d%n", prop.getNombre(), prop.getCorreo(), prop.getTelefono());
+
+            String tieneWifi = al.getWifi() ? "Sí" : "No";
+            System.out.printf("ALOJAMIENTO: %s [%s] - Precio: $%d - WiFi: %s - Zona: %s%n",
+                    al.getUbicacion(), al.getCategoria(), al.getPrecio(), tieneWifi, p.clasificarZona());
+
+            System.out.println("\nSEGURIDAD:");
+            if (p.getReportes().isEmpty()) {
+                System.out.println("No existen reportes de seguridad.");
+            } else {
+                System.out.printf("Índice promedio: %.2f%n", p.calcularIndicePromedio());
+                System.out.printf("Categoría de la zona: %s%n", p.clasificarZona());
+            }
+
+            System.out.println("\nRESEÑAS:");
+            System.out.println("Promedio: " + al.promedioDeResenias() + "⭐");
+            if (p.getAlojamiento().getResenias().isEmpty()) {
+                System.out.println("No existen reseñas para esta publicación.");
+            } else {
+                for (Resenia r : p.getAlojamiento().getResenias()) {
+                    System.out.printf("- [%d/10] %s%n", r.getPuntaje(), r.getComentario());
+                }
+            }
+
+            System.out.println("==================================");
+        }
+
     }
 }

@@ -89,4 +89,23 @@ public class Fora {
             System.out.println("No hay lugares disponibles de esa categoria");
         }
     }
+
+    public ArrayList<Publicacion> filtrarPorPrecio(int precioMaximo) {
+        ArrayList<Publicacion> resultado = new ArrayList<>();
+        for (Publicacion p : publicaciones) {
+            if (p.getAlojamiento().tienePrecioMenorOIgualA(precioMaximo)) {
+                resultado.add(p);
+            }
+        }
+        return resultado;
+    }
+    public ArrayList<Publicacion> filtrarPorCategoria(String categoriaBuscada) {
+        ArrayList<Publicacion> resultado = new ArrayList<>();
+        for (Publicacion p : publicaciones) {
+            if (p.getAlojamiento().getCategoria().equalsIgnoreCase(categoriaBuscada)) {
+                resultado.add(p);
+            }
+        }
+        return resultado;
+    }
 }
