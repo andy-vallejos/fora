@@ -36,7 +36,7 @@ public class PuntosInteres{
         return resp;
     }
 
-    public String normalizarCategoria(String categoria){
+    public static String normalizarCategoria(String categoria){
         String resp = "";
         String categoriaRecortada = categoria.strip();
         if(categoriaRecortada.length() > 0){

@@ -7,7 +7,7 @@ public class LugarInteres {
 
     public LugarInteres(String nombre, String categoria, String direccion, String horarioAtencion) {
         this.nombre = nombre;
-        this.categoria = categoria;
+        this.categoria = PuntosInteres.normalizarCategoria(categoria);
         this.direccion = direccion;
         this.horarioAtencion = horarioAtencion;
     }
